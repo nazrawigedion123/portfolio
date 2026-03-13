@@ -1,173 +1,226 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Nazrawi Gedion | Backend Engineer</title>
-<style>
-body{font-family:Arial,Helvetica,sans-serif;margin:0;background:#f5f5f5;color:#333}
-header{background:#111;color:#fff;padding:40px 20px;text-align:center}
-section{max-width:1000px;margin:auto;padding:40px 20px}
-h2{border-bottom:2px solid #ddd;padding-bottom:10px}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:20px}
-.card{background:#fff;padding:20px;border-radius:10px;box-shadow:0 2px 10px rgba(0,0,0,0.05)}
-ul{padding-left:18px}
-a{color:#0a66c2;text-decoration:none}
-footer{text-align:center;padding:20px;background:#111;color:#fff}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nazrawi Gedion | Backend Engineer</title>
+    <style>
+        :root {
+            --bg: #0f172a;
+            --card-bg: #1e293b;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --accent: #38bdf8;
+            --border: #334155;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            margin: 0;
+            background: var(--bg);
+            color: var(--text-main);
+            line-height: 1.6;
+        }
+
+        header {
+            background: linear-gradient(180deg, #111 0%, var(--bg) 100%);
+            padding: 80px 20px 40px;
+            text-align: center;
+        }
+
+        .profile-img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            border: 3px solid var(--accent);
+            margin-bottom: 20px;
+            object-fit: cover;
+            box-shadow: 0 0 20px rgba(56, 189, 248, 0.2);
+        }
+
+        header h1 {
+            margin: 10px 0;
+            font-size: 2.5rem;
+            letter-spacing: -1px;
+        }
+
+        .subtitle {
+            color: var(--accent);
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+        }
+
+        section {
+            max-width: 900px;
+            margin: auto;
+            padding: 60px 20px;
+        }
+
+        h2 {
+            font-size: 1.8rem;
+            border-left: 4px solid var(--accent);
+            padding-left: 15px;
+            margin-bottom: 30px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+        }
+
+        .card {
+            background: var(--card-bg);
+            padding: 25px;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            transition: transform 0.2s, border-color 0.2s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent);
+        }
+
+        .card h3 {
+            margin-top: 0;
+            color: var(--accent);
+        }
+
+        .exp-meta {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        ul {
+            padding-left: 20px;
+            color: var(--text-muted);
+        }
+
+        li { margin-bottom: 8px; }
+
+        a {
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        a:hover { text-decoration: underline; }
+
+        .tag {
+            display: inline-block;
+            background: rgba(56, 189, 248, 0.1);
+            color: var(--accent);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            margin-top: 10px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 40px;
+            border-top: 1px solid var(--border);
+            color: var(--text-muted);
+        }
+
+        @media (max-width: 600px) {
+            header h1 { font-size: 2rem; }
+        }
+    </style>
 </head>
 <body>
 
 <header>
-<h1>Nazrawi Gedion</h1>
-<p>Backend Engineer | Go • Python • Rust</p>
-<p>Building scalable backend systems, APIs, and microservices</p>
+    <img src="https://avatars.githubusercontent.com/u/119290537?v=4" alt="Nazrawi Gedion" class="profile-img">
+    <h1>Nazrawi Gedion</h1>
+    <p class="subtitle">Backend Engineer</p>
+    <p style="color: var(--text-muted); max-width: 600px; margin: auto;">
+        Building scalable systems, high-performance APIs, and robust microservices using Go, Python, and Rust.
+    </p>
 </header>
 
 <section>
-<h2>Professional Summary</h2>
-<p>
-Backend developer with 4+ years of experience building scalable systems using Golang, Python, and Rust.
-Experienced in microservices, REST APIs, authentication systems, and production backend architecture.
-Strong focus on performance, maintainability, and clean architecture.
-</p>
+    <h2>Professional Summary</h2>
+    <p>
+        Backend developer with 4+ years of experience specialized in distributed systems and cloud architecture. 
+        Expertise in building microservices for financial and e-commerce sectors with a focus on 
+        <strong>performance, concurrency, and clean code.</strong>
+    </p>
 </section>
 
 <section>
-<h2>Technical Skills</h2>
-<div class="grid">
-<div class="card">
-<h3>Backend</h3>
-<ul>
-<li>Golang (Gin, Echo)</li>
-<li>Rust (Actix Web, Rocket, Diesel)</li>
-<li>Django</li>
-<li>Django REST Framework</li>
-<li>FastAPI</li>
-</ul>
-</div>
-
-<div class="card">
-<h3>Frontend</h3>
-<ul>
-<li>React.js</li>
-<li>HTML</li>
-<li>CSS</li>
-<li>JavaScript</li>
-</ul>
-</div>
-
-<div class="card">
-<h3>Databases</h3>
-<ul>
-<li>PostgreSQL</li>
-<li>MySQL</li>
-<li>MongoDB</li>
-</ul>
-</div>
-
-<div class="card">
-<h3>DevOps</h3>
-<ul>
-<li>Git</li>
-<li>Docker</li>
-<li>Linux</li>
-<li>CI/CD</li>
-</ul>
-</div>
-</div>
+    <h2>Technical Stack</h2>
+    <div class="grid">
+        <div class="card">
+            <h3>Languages</h3>
+            <p>Go (Gin, Echo), Rust (Actix, Axum), Python (Django, FastAPI), JavaScript.</p>
+        </div>
+        <div class="card">
+            <h3>Infrastructure</h3>
+            <p>PostgreSQL, Redis, Docker, Linux, CI/CD Pipelines, Microservices.</p>
+        </div>
+    </div>
 </section>
 
 <section>
-<h2>Experience</h2>
-<div class="card">
-<h3>Golang Developer – OneTap Technology</h3>
-<p>Jun 2025 – Present | Addis Ababa</p>
-<ul>
-<li>Developed Go microservices powering USSD service management systems.</li>
-<li>Built secure web gateway services for communication with financial systems.</li>
-<li>Designed REST APIs for USSD service control and routing.</li>
-<li>Collaborated with frontend and DevOps teams in Agile environments.</li>
-</ul>
-</div>
+    <h2>Experience</h2>
+    <div class="card" style="margin-bottom: 20px;">
+        <h3>Golang Developer – OneTap Technology</h3>
+        <span class="exp-meta">Jun 2025 – Present | Addis Ababa</span>
+        <ul>
+            <li>Engineered Go microservices for high-traffic USSD service management.</li>
+            <li>Designed secure gateways for real-time financial system integrations.</li>
+            <li>Optimized API latency and routing for telecommunication protocols.</li>
+        </ul>
+    </div>
 
-<div class="card">
-<h3>Backend Developer – BDN</h3>
-<p>Sep 2024 – Present</p>
-<ul>
-<li>Developed Django and Go-based applications.</li>
-<li>Built REST APIs with Django REST Framework and Gin.</li>
-<li>Developing an eLearning platform using Go and React.</li>
-</ul>
-</div>
-
-<div class="card">
-<h3>Associate Technical Consultant – Business Computing Services</h3>
-<p>May 2022 – Nov 2024</p>
-<ul>
-<li>Resolved hardware, software, and networking issues for clients.</li>
-<li>Developed internal business tools.</li>
-<li>Performed business analysis and documentation.</li>
-</ul>
-</div>
-
-<div class="card">
-<h3>IT Officer – CEIC</h3>
-<p>Apr 2021 – Apr 2022</p>
-<ul>
-<li>Managed IT infrastructure and security.</li>
-<li>Implemented antivirus and system hardening.</li>
-<li>Conducted IT audits and staff training.</li>
-</ul>
-</div>
+    <div class="card" style="margin-bottom: 20px;">
+        <h3>Backend Developer – BDN</h3>
+        <span class="exp-meta">Sep 2024 – Present</span>
+        <ul>
+            <li>Architected Django and Go-based backends for multi-tenant applications.</li>
+            <li>Developed a full-stack eLearning platform using Go and React.</li>
+        </ul>
+    </div>
 </section>
 
 <section>
-<h2>Projects</h2>
-<div class="grid">
-<div class="card">
-<h3>E‑Learning Platform</h3>
-<p>Go (Gin) + React</p>
-<a href="https://github.com/nazrawigedion123/e-learning">GitHub</a>
-</div>
+    <h2>Featured Projects</h2>
+    <div class="grid">
+        <div class="card">
+            <h3>E‑Learning Platform</h3>
+            <p>Comprehensive education portal with real-time tracking.</p>
+            <span class="tag">Go</span> <span class="tag">React</span><br><br>
+            <a href="https://github.com/nazrawigedion123/e-learning">View Source →</a>
+        </div>
 
-<div class="card">
-<h3>Elroe Furniture</h3>
-<p>Django + React eCommerce platform</p>
-<a href="https://github.com/nazrawigedion123/elroe">GitHub</a>
-</div>
-
-<div class="card">
-<h3>BDNsys</h3>
-<p>Business CMS Website</p>
-<a href="https://bdnsys.com">Live Site</a>
-</div>
-
-<div class="card">
-<h3>GCCF Blog</h3>
-<p>Blog platform with CMS</p>
-<a href="https://gccfblog.org">Live Site</a>
-</div>
-</div>
+        <div class="card">
+            <h3>Catdex API</h3>
+            <p>A high-performance REST API built with Rust and Actix Web.</p>
+            <span class="tag">Rust</span> <span class="tag">PostgreSQL</span><br><br>
+            <a href="https://github.com/nazrawigedion123/catdex-api">View Source →</a>
+        </div>
+    </div>
 </section>
 
-<section>
-<h2>Rust Projects</h2>
-<ul>
-<li><a href="https://github.com/nazrawigedion123/guessing-game">Guessing Game CLI</a></li>
-<li><a href="https://github.com/nazrawigedion123/catsay-gui-glade">Catsay GUI (Rust + GTK)</a></li>
-<li><a href="https://github.com/nazrawigedion123/catdex-api">Catdex API (Actix Web)</a></li>
-</ul>
-</section>
-
-<section>
-<h2>Education</h2>
-<p><strong>University of Gondar</strong></p>
-<p>BSc in Computer Science (2018 – 2021)</p>
+<section id="contact">
+    <h2>Get In Touch</h2>
+    <p>I'm currently open to new opportunities and technical collaborations.</p>
+    <div class="card" style="text-align: center;">
+        <p>Email: <a href="mailto:nazrawigedion23@gmail.com">nazrawigedion23@gmail.com</a></p>
+        <p>
+            <a href="https://github.com/nazrawigedion123">GitHub</a> • 
+            <a href="https://www.linkedin.com/in/nazrawi-gedion-121241378/">LinkedIn</a>
+        </p>
+    </div>
 </section>
 
 <footer>
-<p>© 2026 Nazrawi Gedion</p>
+    <p>© 2026 Nazrawi Gedion | Built with Love & Code</p>
 </footer>
 
 </body>
