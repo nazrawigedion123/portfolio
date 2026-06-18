@@ -1,134 +1,264 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nazrawi Gedion | Backend Engineer</title>
+    <title>Nazrawi Gedion | Senior Backend Engineer</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg: #0f172a;
-            --card-bg: #1e293b;
+            --bg: #090d16;
+            --card-bg: #111726;
+            --card-hover: #172033;
             --text-main: #f8fafc;
-            --text-muted: #94a3b8;
+            --text-muted: #64748b;
             --accent: #38bdf8;
-            --border: #334155;
+            --accent-glow: rgba(56, 189, 248, 0.15);
+            --border: #1e293b;
+            --border-hover: #334155;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
         }
 
         body {
-            font-family: 'Inter', -apple-system, sans-serif;
-            margin: 0;
+            font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;
             background: var(--bg);
             color: var(--text-main);
-            line-height: 1.6;
+            line-height: 1.7;
+            -webkit-font-smoothing: antialiased;
         }
 
         header {
-            background: linear-gradient(180deg, #111 0%, var(--bg) 100%);
-            padding: 80px 20px 40px;
+            padding: 100px 24px 60px;
             text-align: center;
+            position: relative;
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            max-width: 1200px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(56,189,248,0.08) 0%, rgba(9,13,22,0) 70%);
+            z-index: -1;
+            pointer-events: none;
         }
 
         .profile-img {
-            width: 120px;
-            height: 120px;
+            width: 110px;
+            height: 110px;
             border-radius: 50%;
-            border: 3px solid var(--accent);
-            margin-bottom: 20px;
+            border: 2px solid var(--border);
+            margin-bottom: 24px;
             object-fit: cover;
-            box-shadow: 0 0 20px rgba(56, 189, 248, 0.2);
+            transition: border-color 0.3s ease;
+        }
+
+        header:hover .profile-img {
+            border-color: var(--accent);
         }
 
         header h1 {
-            margin: 10px 0;
-            font-size: 2.5rem;
-            letter-spacing: -1px;
+            font-size: 2.75rem;
+            font-weight: 700;
+            letter-spacing: -0.03em;
+            margin-bottom: 8px;
+            background: linear-gradient(135deg, #fff 0%, #94a3b8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
         .subtitle {
+            font-family: 'JetBrains Mono', monospace;
             color: var(--accent);
-            font-weight: 600;
-            font-size: 1.1rem;
-            margin-bottom: 10px;
+            font-weight: 500;
+            font-size: 1rem;
+            margin-bottom: 16px;
+            letter-spacing: -0.5px;
+        }
+
+        .header-desc {
+            color: var(--text-muted);
+            max-width: 540px;
+            margin: auto;
+            font-size: 0.95rem;
         }
 
         section {
-            max-width: 900px;
+            max-width: 850px;
             margin: auto;
-            padding: 60px 20px;
+            padding: 40px 24px;
         }
 
         h2 {
-            font-size: 1.8rem;
-            border-left: 4px solid var(--accent);
-            padding-left: 15px;
-            margin-bottom: 30px;
+            font-size: 1.25rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--text-muted);
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        h2::after {
+            content: '';
+            height: 1px;
+            flex-grow: 1;
+            background: var(--border);
+        }
+
+        .summary-text {
+            font-size: 1.1rem;
+            color: #cbd5e1;
         }
 
         .grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 25px;
+            gap: 20px;
         }
 
         .card {
             background: var(--card-bg);
-            padding: 25px;
-            border-radius: 12px;
+            padding: 30px;
+            border-radius: 16px;
             border: 1px solid var(--border);
-            transition: transform 0.2s, border-color 0.2s;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
         }
 
         .card:hover {
-            transform: translateY(-5px);
-            border-color: var(--accent);
+            transform: translateY(-2px);
+            background: var(--card-hover);
+            border-color: var(--border-hover);
+            box-shadow: 0 12px 30px -10px rgba(0,0,0,0.5);
         }
 
         .card h3 {
-            margin-top: 0;
-            color: var(--accent);
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--text-main);
+        }
+
+        .card p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
         }
 
         .exp-meta {
-            color: var(--text-muted);
-            font-size: 0.9rem;
-            margin-bottom: 15px;
+            font-family: 'JetBrains Mono', monospace;
+            color: var(--accent);
+            font-size: 0.8rem;
             display: block;
+            margin-bottom: 16px;
+            opacity: 0.85;
         }
 
         ul {
-            padding-left: 20px;
-            color: var(--text-muted);
+            padding-left: 18px;
+            color: #cbd5e1;
+            font-size: 0.95rem;
         }
 
-        li { margin-bottom: 8px; }
+        li { margin-bottom: 10px; }
+        li::marker { color: var(--border-hover); }
 
         a {
-            color: var(--accent);
+            color: var(--text-main);
             text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        .project-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.9rem;
+            color: var(--accent);
+            font-weight: 500;
+            margin-top: 20px;
+        }
+
+        .project-link:hover {
+            color: #7dd3fc;
+        }
+
+        .tag-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 16px;
+        }
+
+        .tag {
+            font-family: 'JetBrains Mono', monospace;
+            background: rgba(56, 189, 248, 0.06);
+            color: var(--accent);
+            padding: 3px 10px;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            border: 1px solid rgba(56, 189, 248, 0.15);
+        }
+
+        .tech-list {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9rem;
+            color: #94a3b8;
+        }
+
+        .contact-box {
+            text-align: center;
+            background: linear-gradient(135deg, var(--card-bg) 0%, rgba(17,23,38,0.5) 100%);
+        }
+        
+        .contact-box p a {
+            color: var(--accent);
             font-weight: 500;
         }
 
-        a:hover { text-decoration: underline; }
+        .social-links {
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9rem;
+        }
 
-        .tag {
-            display: inline-block;
-            background: rgba(56, 189, 248, 0.1);
-            color: var(--accent);
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            margin-top: 10px;
+        .social-links a {
+            color: var(--text-muted);
+        }
+        .social-links a:hover {
+            color: var(--text-main);
         }
 
         footer {
             text-align: center;
-            padding: 40px;
+            padding: 60px 24px;
             border-top: 1px solid var(--border);
             color: var(--text-muted);
+            font-size: 0.85rem;
+            font-family: 'JetBrains Mono', monospace;
         }
 
         @media (max-width: 600px) {
-            header h1 { font-size: 2rem; }
+            header { padding-top: 60px; }
+            header h1 { font-size: 2.2rem; }
+            .card { padding: 24px; }
         }
     </style>
 </head>
@@ -137,18 +267,18 @@
 <header>
     <img src="https://avatars.githubusercontent.com/u/119290537?v=4" alt="Nazrawi Gedion" class="profile-img">
     <h1>Nazrawi Gedion</h1>
-    <p class="subtitle">Backend Engineer</p>
-    <p style="color: var(--text-muted); max-width: 600px; margin: auto;">
-        Building scalable systems, high-performance APIs, and robust microservices using Go, Python, and Rust.
+    <p class="subtitle">_backend_engineer</p>
+    <p class="header-desc">
+        Building scalable systems, high-performance APIs, and robust microservices using Go, Rust, and Python.
     </p>
 </header>
 
 <section>
     <h2>Professional Summary</h2>
-    <p>
-        Backend developer with 4+ years of experience specialized in distributed systems and cloud architecture. 
-        Expertise in building microservices for financial and e-commerce sectors with a focus on 
-        <strong>performance, concurrency, and clean code.</strong>
+    <p class="summary-text">
+        Backend developer with 4+ years of experience specializing in distributed systems and cloud architecture. 
+        Expertise in building concurrent microservices for high-traffic environments with a strict focus on 
+        <strong>performance, structural predictability, and type-safe infrastructure.</strong>
     </p>
 </section>
 
@@ -157,11 +287,11 @@
     <div class="grid">
         <div class="card">
             <h3>Languages</h3>
-            <p>Go (Gin, Echo), Rust (Actix, Axum), Python (Django, FastAPI), JavaScript.</p>
+            <p class="tech-list">Go (Gin, Echo), Rust (Actix, Axum), Python (FastAPI, Django), TypeScript.</p>
         </div>
         <div class="card">
             <h3>Infrastructure</h3>
-            <p>PostgreSQL, Redis, Docker, Linux, CI/CD Pipelines, Microservices.</p>
+            <p class="tech-list">PostgreSQL, Redis, Docker, Linux, CI/CD, Async ORMs, Microservices.</p>
         </div>
     </div>
 </section>
@@ -180,7 +310,7 @@
 
     <div class="card" style="margin-bottom: 20px;">
         <h3>Backend Developer – BDN</h3>
-        <span class="exp-meta">Sep 2024 – Present</span>
+        <span class="exp-meta">Sep 2024 – Jun 2025</span>
         <ul>
             <li>Architected Django and Go-based backends for multi-tenant applications.</li>
             <li>Developed a full-stack eLearning platform using Go and React.</li>
@@ -192,35 +322,44 @@
     <h2>Featured Projects</h2>
     <div class="grid">
         <div class="card">
-            <h3>E‑Learning Platform</h3>
-            <p>Comprehensive education portal with real-time tracking.</p>
-            <span class="tag">Go</span> <span class="tag">React</span><br><br>
-            <a href="https://github.com/nazrawigedion123/e-learning">View Source →</a>
+            <h3>Backend Actix Template</h3>
+            <p>Production-ready Rust web API template featuring a clean 3-layer decoupled architecture, async Diesel ORM parsing, JSON telemetry logging, and robust DI patterns.</p>
+            <div class="tag-container">
+                <span class="tag">Rust 1.85+</span>
+                <span class="tag">Actix Web 4.9</span>
+                <span class="tag">PostgreSQL</span>
+            </div>
+            <a href="https://github.com/nazrawigedion123/actix-backend-template" class="project-link" target="_blank">View Source →</a>
         </div>
 
         <div class="card">
-            <h3>Catdex API</h3>
-            <p>A high-performance REST API built with Rust and Actix Web.</p>
-            <span class="tag">Rust</span> <span class="tag">PostgreSQL</span><br><br>
-            <a href="https://github.com/nazrawigedion123/catdex-api">View Source →</a>
+            <h3>Todo or Not Todo</h3>
+            <p>A cross-platform native desktop task engine built with a modular Rust library backplane utilizing SQLite thread pooling, bridged out to a modern reactive UI layer.</p>
+            <div class="tag-container">
+                <span class="tag">Tauri v2</span>
+                <span class="tag">Rust Core</span>
+                <span class="tag">Vue 3</span>
+                <span class="tag">SQLite</span>
+            </div>
+            <a href="https://github.com/nazrawigedion123/todo-or-not-todo" class="project-link" target="_blank">View Source →</a>
         </div>
     </div>
 </section>
 
 <section id="contact">
     <h2>Get In Touch</h2>
-    <p>I'm currently open to new opportunities and technical collaborations.</p>
-    <div class="card" style="text-align: center;">
+    <div class="card contact-box">
+        <p style="margin-bottom: 8px;">Open to new technical collaborations and high-impact engineering opportunities.</p>
         <p>Email: <a href="mailto:nazrawigedion23@gmail.com">nazrawigedion23@gmail.com</a></p>
-        <p>
-            <a href="https://github.com/nazrawigedion123">GitHub</a> • 
-            <a href="https://www.linkedin.com/in/nazrawi-gedion-121241378/">LinkedIn</a>
-        </p>
+        <div class="social-links">
+            <a href="https://github.com/nazrawigedion123" target="_blank">GitHub</a> • 
+            <a href="https://www.linkedin.com/in/nazrawi-gedion-121241378/" target="_blank">LinkedIn</a>
+        </div>
     </div>
 </section>
 
 <footer>
-    <p>© 2026 Nazrawi Gedion | Built with Love & Code</p>
+    <p>© 2026 Nazrawi Gedion // Built with Type Safety & Concurrency</p>
 </footer>
 
 </body>
