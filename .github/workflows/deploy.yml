@@ -27,25 +27,24 @@ jobs:
           extended: true
 
       - name: Build Hugo blog
-        run: |
-          cd blog
-          hugo --minify
-          echo "=== Built files ==="
-          find public -type f | sort
+        working-directory: blog
+        run: hugo --minify
 
       - name: Prepare deploy directory
         run: |
           mkdir -p _deploy/blog
           touch _deploy/.nojekyll
           cp index.html _deploy/
-          cp -r blog/public/* _deploy/blog/
-          echo "=== Deploy structure ==="
+          cp -r blog/public/. _deploy/blog/
+          echo "=== Final _deploy structure ==="
           find _deploy -type f | sort
+          echo "=== blog/index.html first bytes ==="
+          head -c 200 _deploy/blog/index.html
 
-      - name: Upload Pages artifact
+      - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: _deploy
+          path: ./_deploy
 
   deploy:
     needs: build
