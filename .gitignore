@@ -1,3 +1,14 @@
 # MyST blog build output
 blog/_build/
 blog/node_modules/
+
+# Hugo-generated blog output
+blog/public/
+blog/index.html
+blog/index.xml
+blog/sitemap.xml
+blog/categories/
+blog/page/
+blog/posts/
+blog/tags/
+blog/.hugo_build.lock

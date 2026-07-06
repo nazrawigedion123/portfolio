@@ -37,8 +37,11 @@ jobs:
           touch _deploy/.nojekyll
           # Copy portfolio home page
           cp index.html _deploy/index.html
-          # Copy Hugo output into blog/ subdirectory
+          # Copy Hugo output into the blog subdirectory for Pages
           rsync -av blog/public/ _deploy/blog/
+          # Also place the generated site in the repository blog/ path so GitHub Pages
+          # can serve /blog/ directly when deployed from the branch root.
+          rsync -av blog/public/ blog/
           echo "=== Final _deploy layout ==="
           find _deploy -name "*.html" | sort
 
