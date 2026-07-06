@@ -37,13 +37,20 @@ jobs:
         run: |
           cd blog
           hugo --minify
+          echo "Built files:"
+          ls -R public/
 
       - name: Prepare deploy directory
         run: |
           mkdir -p _deploy/blog
           touch _deploy/.nojekyll
           cp index.html _deploy/
-          cp -r blog/public/* _deploy/blog/
+          if [ -d "blog/public" ]; then
+            cp -r blog/public/* _deploy/blog/
+          else
+            echo "Error: blog/public directory not found!"
+            exit 1
+          fi
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v5

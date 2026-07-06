@@ -1,6 +1,7 @@
-baseURL: "/portfolio/blog/"
+baseURL: "https://nazrawigedion123.github.io/portfolio/blog/"
 locale: "en-us"
 title: "Nazrawi Gedion | Blog"
+publishDir: "public"
 # theme: "custom" (layouts are in the root layouts folder)
 
 params:
