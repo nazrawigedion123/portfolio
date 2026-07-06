@@ -1,0 +1,3 @@
+# MyST blog build output
+blog/_build/
+blog/node_modules/
