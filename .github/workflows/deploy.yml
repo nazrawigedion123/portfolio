@@ -5,9 +5,6 @@ on:
     branches: [main]
   workflow_dispatch:
 
-env:
-  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
-
 permissions:
   contents: read
   pages: write
@@ -15,17 +12,13 @@ permissions:
 
 concurrency:
   group: pages
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
-
-      - uses: actions/setup-node@v6
-        with:
-          node-version: 24
+      - uses: actions/checkout@v4
 
       - name: Setup Hugo
         uses: peaceiris/actions-hugo@v3
@@ -37,30 +30,20 @@ jobs:
         run: |
           cd blog
           hugo --minify
-          echo "Built files:"
-          ls -R public/
+          echo "=== Built files ==="
+          find public -type f | sort
 
       - name: Prepare deploy directory
         run: |
           mkdir -p _deploy/blog
           touch _deploy/.nojekyll
           cp index.html _deploy/
-          if [ -d "blog/public" ]; then
-            cp -r blog/public/* _deploy/blog/
-          else
-            echo "Error: blog/public directory not found!"
-            exit 1
-          fi
-
-      - name: Verify deploy structure
-        run: |
-          echo "=== _deploy structure ==="
+          cp -r blog/public/* _deploy/blog/
+          echo "=== Deploy structure ==="
           find _deploy -type f | sort
-          echo "=== blog/public structure ==="
-          find blog/public -type f | sort
 
       - name: Upload Pages artifact
-        uses: actions/upload-pages-artifact@v5
+        uses: actions/upload-pages-artifact@v3
         with:
           path: _deploy
 
@@ -73,4 +56,4 @@ jobs:
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v5
+        uses: actions/deploy-pages@v4
