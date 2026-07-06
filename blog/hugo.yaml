@@ -1,0 +1,19 @@
+baseURL: "/portfolio/blog/"
+languageCode: "en-us"
+title: "Nazrawi Gedion | Blog"
+theme: "custom"
+
+params:
+  description: "Personal blog about Go, backend engineering, distributed systems, and performance optimization."
+  author: "Nazrawi Gedion"
+  github: "https://github.com/nazrawigedion123"
+
+markup:
+  highlight:
+    codeFences: true
+    guessSyntax: true
+    lineNos: true
+    style: "monokai"
+  goldmark:
+    renderer:
+      unsafe: true # Allow HTML in markdown if needed

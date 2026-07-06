@@ -27,22 +27,23 @@ jobs:
         with:
           node-version: 24
 
-      - name: Install mystmd
-        run: npm install -g mystmd
+      - name: Setup Hugo
+        uses: peaceiris/actions-hugo@v3
+        with:
+          hugo-version: 'latest'
+          extended: true
 
-      - name: Build MyST blog
+      - name: Build Hugo blog
         run: |
           cd blog
-          myst build --site --html
-        env:
-          BASE_URL: /portfolio/blog
+          hugo --minify
 
       - name: Prepare deploy directory
         run: |
           mkdir -p _deploy/blog
           touch _deploy/.nojekyll
           cp index.html _deploy/
-          cp -r blog/_build/html/* _deploy/blog/
+          cp -r blog/public/* _deploy/blog/
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v5

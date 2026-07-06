@@ -2,8 +2,8 @@
 title: "Memory Usage and Optimizations in Go"
 description: "Understanding Go's garbage collector, memory allocation patterns, and practical optimization techniques to reduce GC pressure."
 date: 2026-07-06
-authors:
-  - name: Nazrawi Gedion
+author: "Nazrawi Gedion"
+tags: ["Go", "Performance", "Optimization"]
 ---
 
 Go is a garbage-collected language, which means memory management is largely handled for you. But understanding _how_ the GC works — and how to work _with_ it — is critical for building high-performance applications.

@@ -1,0 +1,14 @@
+{{ define "main" }}
+<header>
+    <h1>{{ .Title }}</h1>
+    <p class="subtitle">{{ .Date.Format "January 2, 2006" }} // By {{ .Params.author | default .Site.Params.author }}</p>
+</header>
+
+<main>
+    <div class="card">
+        <div class="post-content">
+            {{ .Content }}
+        </div>
+    </div>
+</main>
+{{ end }}
