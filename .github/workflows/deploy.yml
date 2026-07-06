@@ -33,18 +33,19 @@ jobs:
       - name: Prepare deploy directory
         run: |
           mkdir -p _deploy/blog
+          # Important: .nojekyll must be at the artifact root
           touch _deploy/.nojekyll
-          cp index.html _deploy/
-          cp -r blog/public/. _deploy/blog/
-          echo "=== Final _deploy structure ==="
-          find _deploy -type f | sort
-          echo "=== blog/index.html first bytes ==="
-          head -c 200 _deploy/blog/index.html
+          # Copy portfolio home page
+          cp index.html _deploy/index.html
+          # Copy Hugo output into blog/ subdirectory
+          rsync -av blog/public/ _deploy/blog/
+          echo "=== Final _deploy layout ==="
+          find _deploy -name "*.html" | sort
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./_deploy
+          path: _deploy
 
   deploy:
     needs: build
