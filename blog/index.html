@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Memory Usage and Optimizations in Go | Nazrawi Gedion</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #090d16;
+            --panel: #111726;
+            --text: #f8fafc;
+            --muted: #94a3b8;
+            --subtle: #64748b;
+            --accent: #38bdf8;
+            --border: #1e293b;
+            --code: #0f172a;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.75;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        main {
+            width: min(820px, calc(100% - 40px));
+            margin: 0 auto;
+            padding: 44px 0 72px;
+        }
+
+        nav {
+            margin-bottom: 56px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9rem;
+        }
+
+        a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        a:hover {
+            color: #7dd3fc;
+        }
+
+        .meta {
+            color: var(--accent);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            margin-bottom: 14px;
+        }
+
+        h1 {
+            font-size: clamp(2.1rem, 6vw, 4rem);
+            line-height: 1.05;
+            letter-spacing: -0.03em;
+            margin-bottom: 18px;
+        }
+
+        .description {
+            color: var(--muted);
+            font-size: 1.1rem;
+            max-width: 680px;
+            margin-bottom: 40px;
+        }
+
+        article {
+            border-top: 1px solid var(--border);
+            padding-top: 34px;
+        }
+
+        h2 {
+            font-size: 1.55rem;
+            line-height: 1.25;
+            margin: 38px 0 14px;
+        }
+
+        h3 {
+            font-size: 1.12rem;
+            margin: 28px 0 10px;
+        }
+
+        p {
+            color: #cbd5e1;
+            margin-bottom: 18px;
+        }
+
+        strong {
+            color: var(--text);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0 28px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+        }
+
+        th,
+        td {
+            padding: 12px 14px;
+            border-bottom: 1px solid var(--border);
+            text-align: left;
+            color: #cbd5e1;
+            vertical-align: top;
+        }
+
+        th {
+            background: var(--panel);
+            color: var(--text);
+            font-weight: 600;
+        }
+
+        tr:last-child td {
+            border-bottom: 0;
+        }
+
+        pre {
+            background: var(--code);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            overflow-x: auto;
+            padding: 18px;
+            margin: 16px 0 24px;
+        }
+
+        code {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9rem;
+            color: #bae6fd;
+        }
+
+        .tag-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 34px;
+        }
+
+        .tag {
+            font-family: 'JetBrains Mono', monospace;
+            background: rgba(56, 189, 248, 0.06);
+            color: var(--accent);
+            padding: 3px 10px;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            border: 1px solid rgba(56, 189, 248, 0.15);
+        }
+
+        @media (max-width: 640px) {
+            main {
+                width: min(100% - 28px, 820px);
+                padding-top: 28px;
+            }
+
+            table {
+                display: block;
+                overflow-x: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+<main>
+    <nav><a href="/portfolio/">Back to portfolio</a></nav>
+
+    <header>
+        <p class="meta">July 6, 2026 / Go / Performance</p>
+        <h1>Memory Usage and Optimizations in Go</h1>
+        <p class="description">Understanding Go's garbage collector, memory allocation patterns, and practical optimization techniques to reduce GC pressure.</p>
+        <div class="tag-row">
+            <span class="tag">Go</span>
+            <span class="tag">Performance</span>
+            <span class="tag">Memory</span>
+        </div>
+    </header>
+
+    <article>
+        <p>Go is a garbage-collected language, which means memory management is largely handled for you. But understanding how the GC works, and how to work with it, is critical for building high-performance applications.</p>
+
+        <h2>What is a Garbage Collector?</h2>
+        <p>A garbage collector handles memory free-ups and memory allocation for variables. It tracks which memory is still in use and reclaims what is not. While this frees you from manual memory management, it comes at a cost: the GC consumes CPU cycles and can introduce latency during collection cycles.</p>
+
+        <h2>Memory Location: Stack vs Heap</h2>
+        <p>The Go compiler decides where to allocate a variable, either on the stack or the heap.</p>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Property</th>
+                    <th>Stack</th>
+                    <th>Heap</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Speed</td>
+                    <td>Extremely fast</td>
+                    <td>Slower due to searching for space</td>
+                </tr>
+                <tr>
+                    <td>Size</td>
+                    <td>Small and limited</td>
+                    <td>Large and flexible</td>
+                </tr>
+                <tr>
+                    <td>Structure</td>
+                    <td>Strict LIFO</td>
+                    <td>Hierarchical and fragmented</td>
+                </tr>
+                <tr>
+                    <td>Usage</td>
+                    <td>Temporary local variables</td>
+                    <td>Dynamic data that changes</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <p>Variables on the stack are automatically cleaned up when their function returns. Variables on the heap must be garbage-collected. Your goal should be to keep as much on the stack as possible.</p>
+
+        <h2>Patterns to Reduce GC Pressure</h2>
+
+        <h3>Prefer the stack over the heap</h3>
+        <p>Pass by value. Do not pass pointers for large variables or structures unless they actually need to be mutated at a project level.</p>
+        <pre><code>// Good: stays on stack
+func processUser(u User) { ... }
+
+// Only use if mutation is needed
+func processUser(u *User) { ... }</code></pre>
+
+        <h3>Avoid interface boxing</h3>
+        <p>Assigning a concrete type to an <code>interface{}</code> or <code>any</code> can cause escape to the heap.</p>
+        <pre><code>// Bad: forces heap allocation
+var v interface{} = 42
+
+// Better: use concrete types
+var v int = 42</code></pre>
+
+        <h3>Use escape analysis</h3>
+        <p>Run the compiler with escape analysis flags during development to see exactly why variables escape to the heap.</p>
+        <pre><code>go build -gcflags="-m"</code></pre>
+
+        <h3>Reorder struct fields</h3>
+        <p>Reorder struct fields in decreasing size to avoid empty padding from alignment.</p>
+        <pre><code>// Bad: 24 bytes due to padding
+type Bad struct {
+    a bool
+    b int64
+    c bool
+}
+
+// Good: 16 bytes, no wasted space
+type Good struct {
+    b int64
+    a bool
+    c bool
+}</code></pre>
+
+        <h3>Preallocate and reuse memory</h3>
+        <p>Preallocate slice capacity when you know the expected size.</p>
+        <pre><code>// Bad: grows dynamically, causes reallocations
+var items []int
+for i := 0; i < 1000; i++ {
+    items = append(items, i)
+}
+
+// Good: preallocate
+items := make([]int, 0, 1000)
+for i := 0; i < 1000; i++ {
+    items = append(items, i)
+}</code></pre>
+
+        <p>Use <code>sync.Pool</code> to recycle short-lived structs or buffers.</p>
+        <pre><code>var pool = sync.Pool{
+    New: func() any {
+        return &bytes.Buffer{}
+    },
+}
+
+buf := pool.Get().(*bytes.Buffer)
+buf.Reset()
+defer pool.Put(buf)</code></pre>
+
+        <h3>Managing slices</h3>
+        <p>Use a copy instead of slicing large arrays when you only need a small part. This prevents the entire backing array from staying alive.</p>
+        <pre><code>// Bad: keeps whole large array alive
+data := readLargeFile()
+chunk := data[100:200]
+
+// Good: copy only what you need
+chunk := make([]byte, 100)
+copy(chunk, data[100:200])</code></pre>
+
+        <h3>Manage goroutines with pools</h3>
+        <p>Minimize blocking calls. Use worker pools and <code>sync.Pool</code> to control concurrency.</p>
+        <pre><code>worker := make(chan struct{}, 100)</code></pre>
+
+        <h2>Profiling Measures</h2>
+        <p>Never guess where your memory is going. Use profiling to identify true bottlenecks.</p>
+
+        <h3>pprof</h3>
+        <p>Analyze heap usage with Go's built-in profiler.</p>
+        <pre><code>go tool pprof http://localhost:6060/debug/pprof/heap</code></pre>
+
+        <h3>Escape analysis during builds</h3>
+        <pre><code>go build -gcflags="-m" 2&gt;&amp;1 | grep "escapes to heap"</code></pre>
+
+        <h2>Summary</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Technique</th>
+                    <th>Benefit</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Pass by value</td>
+                    <td>Keeps data on stack</td>
+                </tr>
+                <tr>
+                    <td>Avoid interface boxing</td>
+                    <td>Prevents heap escape</td>
+                </tr>
+                <tr>
+                    <td>Reorder struct fields</td>
+                    <td>Reduces memory padding</td>
+                </tr>
+                <tr>
+                    <td>Preallocate slices</td>
+                    <td>Avoids reallocation overhead</td>
+                </tr>
+                <tr>
+                    <td>sync.Pool</td>
+                    <td>Reuses short-lived objects</td>
+                </tr>
+                <tr>
+                    <td>Copy slice data</td>
+                    <td>Prevents large backing array retention</td>
+                </tr>
+                <tr>
+                    <td>Use pprof</td>
+                    <td>Identifies real memory bottlenecks</td>
+                </tr>
+                <tr>
+                    <td>Escape analysis flags</td>
+                    <td>Catches heap escapes during build</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <p>Understanding Go's memory model and GC behavior is essential for writing efficient, production-ready systems. The key takeaway: <strong>measure first, optimize second</strong>, and always prefer the stack when possible.</p>
+    </article>
+</main>
+</body>
+</html>

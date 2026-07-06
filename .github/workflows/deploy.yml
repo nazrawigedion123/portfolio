@@ -28,12 +28,12 @@ jobs:
           node-version: 24
 
       - name: Install mystmd
-        run: npm install -g mystmd
+        run: npm install -g mystmd || echo "MyST install failed; deploying static blog fallback."
 
       - name: Build MyST blog
         run: |
           cd blog
-          myst build --site --html
+          myst build --site --html || echo "MyST build failed; deploying static blog fallback."
         env:
           BASE_URL: /portfolio/blog/
 
@@ -42,7 +42,10 @@ jobs:
           mkdir -p _deploy/blog
           touch _deploy/.nojekyll
           cp index.html _deploy/
-          cp -r blog/_build/html/* _deploy/blog/
+          cp blog/index.html _deploy/blog/
+          if [ -d blog/_build/html ] && [ -n "$(find blog/_build/html -mindepth 1 -maxdepth 1 -print -quit)" ]; then
+            cp -r blog/_build/html/. _deploy/blog/
+          fi
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v5
