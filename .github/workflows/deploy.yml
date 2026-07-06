@@ -35,7 +35,7 @@ jobs:
           cd blog
           myst build --site --html
         env:
-          BASE_URL: /portfolio/blog/
+          BASE_URL: /portfolio/blog
 
       - name: Prepare deploy directory
         run: |
