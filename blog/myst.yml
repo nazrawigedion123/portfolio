@@ -15,8 +15,6 @@ project:
     - file: posts/memory-usage-optimizations/index.md
 site:
   template: book-theme
-  parts:
-    primary_sidebar_footer: sidebar-footer.md
   options:
     # favicon: favicon.ico
     # logo: logo.png
