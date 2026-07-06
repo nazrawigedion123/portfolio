@@ -52,6 +52,13 @@ jobs:
             exit 1
           fi
 
+      - name: Verify deploy structure
+        run: |
+          echo "=== _deploy structure ==="
+          find _deploy -type f | sort
+          echo "=== blog/public structure ==="
+          find blog/public -type f | sort
+
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v5
         with:
